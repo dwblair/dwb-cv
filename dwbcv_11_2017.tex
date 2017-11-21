@@ -1,0 +1,1145 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%C
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+\RequirePackage[T1]{fontenc}
+
+% LaTeX will typeset using Computer Modern Roman, which a lot of
+% non-mathematicians and non-engineers won't like. Also, a few PDF
+% viewers may not render CMR very well. Instead, Times New Roman can
+% be used. That's what this package does.
+\usepackage{times}
+
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+% (NOTE: This requires the times package above)
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+% This package helps LaTeX auto-hyphenate hyphenated words if you use
+% special hyphens. For example, bio\-/mimicry will properly hyphenate
+% ``mimicry'' if necessary.
+\usepackage[shortcuts]{extdash}
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+% Provides special list environments and macros to create new ones
+\usepackage[shortlabels]{enumitem}
+
+% Simpler bibsections for CV sections
+% (thanks to natbib for inspiration)
+%
+% * For lists of references with hanging indents and no numbers:
+%
+%   \begin{bibsection}
+%       \item ...
+%   \end{bibsection}
+%
+% * For numbered lists of references (with hanging indents):
+%
+%   \begin{bibenum}
+%       \item ...
+%   \end{bibenum}
+%
+%   Note that bibenum numbers continuously throughout. To reset the
+%   counter, use
+%
+%   \restartlist{bibenum}
+%
+%   at the place where you want the numbering to reset.
+
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newlist{bibsection}{itemize}{3}
+\setlist[bibsection]{label=,leftmargin=\bibhang,%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\newlist{bibenum}{enumerate}{3}
+\setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\let\oldendbibenum\endbibenum
+\def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+\let\oldendbibsection\endbibsection
+\def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+\makeatother
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% HEADING AT TOP OF CURRICULUM VITAE
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[{\includegraphics[height=1.5in]{my_picture}}]{Your Name}
+%
+% the picture will be flush right across from the name. For this example
+% to work, make sure the extra set of curly braces is included. Also
+% makes ure that \usepackage{graphicx} is somewhere in the preamble.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+%%% SECTION HEADINGS
+
+% The section headings. Flush left in small caps down pseudo-margin.
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\hyphenpenalty=10000\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+%%% LISTS
+
+% This macro alters a list by removing some of the space that follows the list
+% (is used by lists below)
+\newcommand*\fixendlist[1]{%
+    \expandafter\let\csname preFixEndListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixEndListend#1\endcsname\vspace{-0.6\baselineskip}}}
+
+% These macros help ensure that items in outer-type lists do not get
+% separated from the next line by a page break
+% (they are used by lists below)
+\let\originalItem\item
+\newcommand*\fixouterlist[1]{%
+    \expandafter\let\csname preFixOuterList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\def\item{\pagebreak[2]\oldItem}\csname preFixOuterList#1\endcsname}
+    \expandafter\let\csname preFixOuterListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\let\item\oldItem\csname preFixOuterListend#1\endcsname}}
+\newcommand*\fixinnerlist[1]{%
+    \expandafter\let\csname preFixInnerList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\let\item\originalItem\csname preFixInnerList#1\endcsname}
+    \expandafter\let\csname preFixInnerListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixInnerListend#1\endcsname\let\item\oldItem}}
+
+% An itemize-style list with lots of space between items
+%
+% Usage:
+%   \begin{outerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{outerlist}
+\newlist{outerlist}{itemize}{3}
+    \setlist[outerlist]{label=\enskip\textbullet,leftmargin=*}
+    \fixendlist{outerlist}
+    \fixouterlist{outerlist}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{lonelist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{lonelist}
+\newlist{lonelist}{itemize}{3}
+    \setlist[lonelist]{label=\enskip\textbullet,leftmargin=*,partopsep=0pt,topsep=0pt}
+    \fixendlist{lonelist}
+    \fixouterlist{lonelist}
+
+% An itemize-style list with little space between items
+%
+% Usage:
+%   \begin{innerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{innerlist}
+\newlist{innerlist}{itemize}{3}
+    \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixinnerlist{innerlist}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{loneinnerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{loneinnerlist}
+\newlist{loneinnerlist}{itemize}{3}
+    \setlist[loneinnerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixendlist{loneinnerlist}
+    \fixinnerlist{loneinnerlist}
+
+%%% EXTRA SPACE
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+%%% FORMATTING MACROS
+
+% Provides a linked \doi{#1} that links doi:#1 to http://dx.doi.org/#1
+\usepackage{doi}
+% To change the text before the DOI, adjust this command
+%\renewcommand\doitext{doi:}
+
+% Provides a linked \url{#1} that doesn't require escape characters
+\usepackage{url}
+
+% You can adjust the style \url{} uses here:
+% (options are: same, rm, sf, tt; defaults to tt)
+\urlstyle{same}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+% (uncomment to typeset the e\-/mail address in typewriter font;
+%  otherwise, will be typeset in the \urlstyle above)
+%\DeclareUrlCommand\emaillink{\urlstyle{tt}}
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+
+% Custom hyphenation rules for words that LaTeX has trouble with
+\hyphenation{bio-mim-ic-ry bio-in-spi-ra-tion re-us-a-ble pro-vid-er Media-Wiki}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Don ~Blair}
+
+\section{Contact Information}
+
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table. Table is one row made up of three parboxes. The left
+%       parbox has address info, the middle parbox has a vertical bar,
+%       and the right parbox has phone and electronic contact
+%       information.
+%
+% MACROS: \rcollength is the width of the right column of the table
+%             (adjust it to your liking; default is 1.85in).
+%         \spacewidth is width of area between left and right boxes.
+%
+\newlength{\rcollength}\setlength{\rcollength}{1.85in}%
+\newlength{\spacewidth}\setlength{\spacewidth}{20pt}
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
+
+% Address box
+\parbox{\textwidth-\rcollength-\spacewidth}{%
+% Current Positions: \\ \\
+\emph{Fellow}, \href{http://publiclab.org/}{Public Laboratory}\\ 
+%\emph{Research Affiliate}, \href{http://civic.mit.edu}{MIT Center for Civic Media}\\
+
+}
+
+&
+% Uncomment to add a vertical bar in middle of contact information
+%{\vrule width 0.5pt}
+\parbox[m][5\baselineskip]{\spacewidth}{} &
+
+% Non-snail-mail contact information
+\parbox{\rcollength}{%
+\textit{Mobile:} +1-651-252-4765 \\
+\textit{E-mail:} \email{donblair@pvos.org}\\
+\textit{web:} \email{dwblair.github.io}\\
+\textit{twitter:} \href{http://twitter.com/donwblair}{@donwblair}
+}
+
+\end{tabular}
+
+%%
+%% In modern CV's, it seems like ``Objective'' is frowned upon. Instead,
+%% incorporate it into a well-constructed cover letter. The ``More
+%% information'' can go at the end of the CV, but it should not distract
+%% from the section giving references available to contact.
+%%
+%
+% \section{Objective}
+%
+% Placement in an academic position (i.e., faculty, postdoctoral, or
+% research scientist) that allows for advanced research in distributed
+% complex adaptive systems (i.e., modeling, analysis, design, and
+% verification) with a particular focus on the control of engineered
+% agents (e.g., for communications, control, software, electronics, and
+% sustainability) and the analysis of biological phenomena (e.g.,
+% self-organization, ecological rationality)
+% \begin{innerlist}
+% \item More information and auxiliary documents can be found at\\\url{http://www.tedpavlic.com/facjobsearch/}
+% \end{innerlist}
+
+\section{Research and Work Interests}
+
+\textbf{Developing support structures for community science and civic engagement.} \\
+Digital labor, community science, hierarchy and power in knowledge commons work, cooperation, civic engagement through the humanities, social and cognitive ergonomics, hydrology, agriculture.
+
+
+\halfblankline
+
+
+\section{Education}
+
+\href{http://www.osu.edu/}{\textbf{University of Massachusetts Amherst}},
+Amherst, MA
+\begin{outerlist}
+
+\item[] M.S.
+        \href{http://physics.umass.edu}
+             {Physics},
+             May 2003
+        \begin{innerlist}
+        \item Areas of Study: \emph{Soft Matter, Complex Systems, Statistical Mechanics}
+        %\item Thesis Proposal: \emph{Cooperative Task Processing}
+        \item Advisor:
+              \href{http://people.umass.edu/machta/}
+                   {Professor Jon Machta}
+        \end{innerlist}
+
+\item[] B.A.,
+        \href{http://www.umass.edu/philosophy/}
+             {Philosophy}, May 1998
+        \begin{innerlist}
+        \item Areas of Study: \emph{Ancient Philosophy, Ethics, Language, Mind}
+        \item Advisers:
+              \href{http://www.umass.edu/philosophy/faculty/GBM/Matthews%28memoriam%29.htm}
+                   {Professor Gareth Matthews} and \href{http://www3.amherst.edu/~jgentzler/}
+                   {Professor Jyl Gentzler}
+        \end{innerlist}
+
+\end{outerlist}
+
+% \section{Submitted Journal Publications}
+%
+% % Add a little space to nudge next ``Ref'd Journal Publications'' marginpar
+% % down to make room for tall ``Submitted Journal Publications''
+% % marginpar. If there are enough submitted journal publications, this
+% % space will not be needed (and should be removed).
+% \vspace{0.1in}
+
+\section{Articles}
+
+\begin{bibenum}
+    \item D.W.~Blair, C.D.~Santangelo, and J.~Machta. Packing Squares in a Torus. \emph{Journal of Statistical Mechanics}, P01018 (2012). \\
+        \doi{10.1088/1742-5468/2012/01/P01018}
+
+    \item J.R.~Savage, D.W.~Blair, A.J.~Levine, R.A.~Guyer, and A.D.~Dinsmore. Imaging the Sublimation Dynamics of Colloidal Crystallites. 
+        \emph{Science}, 314, 795 (2006). \\
+\doi{10.1126/science.1128649}
+
+    \item \href{https://medium.com/@donwblair/sensor-journalism-and-citizen-science-its-about-the-social-ergonomics-stupid-bea07b25f597}{``Sensor Journalism and Citizen Science: It's About the Social Ergonomics"}, Sept 9, 2014, Medium.com. 
+
+ \item \href{http://publiclab.org/profile/donblair}{Collected research notes} under profile ``donblair" on \href{http://publiclab.org}{Publiclab.org}.
+  
+
+
+\end{bibenum}
+
+% Add a little space to nudge next ``Conference Publications'' marginpar
+% down to make room for tall ``Submitted Conference Publications''
+% marginpar. If there are enough submitted journal publications, this
+% space will not be needed (and should be removed).
+%\vspace{0.1in}
+
+\section{Book Chapters}
+
+\begin{bibenum}
+
+    \item S. Dosemagen, J. Breen, and D. Blair. Forthcoming. ``Democratizing Environmental Research: Developing a Grassroots Environmental Research Community through Open Source DIY Tools". In: \href{http://enablingcity.com/v2/}{Enabling Cities, Volume 2}.
+
+    \item J. Breen, S. Dosemagen, D. Blair and L. Barry. Forthcoming. ``Public Laboratory: Play and civic engagement." In: \emph{The Playful Citizen: Power, Creativity, Knowledge}, eds. J Raessens, S
+Lammes, R Glas, M de Lange. Netherlands: Amsterdam University Press
+
+    \item C. D'Ignazio, J. Warren, and D. Blair. 2014. \href{http://publiclab.org/notes/donblair/12-02-2014/less-is-more-the-role-of-small-data-for-governance-in-the-21st-century}{"Less is More: The Role of Small Data in 21st Century Governance."}  In: \emph{\href{http://www.ufrgs.br/cegov/files/livros/gtdigital.pdf}{Governan\c{c}a Digital}}, eds. M. S. Pimenta, D. F. Canabarrao. UFRGS Press. 
+
+    \item D. Blair, J. Breen, S. Dosemagen, M. Lippincott, and L. Barry. 2013. ``Civic, Citizen, and Grassroots Science: Towards a Transformative Scientific Research Agenda." In: \href{http://offenhuber.net/new-book-accountability-technologies-tools-for-asking-hard-questions/}{\emph{Accountability Technologies: Tools for Asking Hard Questions}}, edited by D. Offenhuber and K. Schechtner. Vienna: Ambra Verlag.
+
+\end{bibenum}
+
+%\section{Other Publications}
+
+%\begin{bibenum}
+
+
+%\end{bibenum}
+
+%\section{Chapters in Preparation}
+
+%\begin{bibenum}
+
+%\item D. Blair, ``The Promise of Community Science", In: \emph{The Rightful Place of Science: Citizen Science}. ed. Darlene Cavalier.  Arizona State University Press.
+
+% \item C.~D'Ignazio, J.~Warren, and D.~Blair. ``Open Community Science: the Small Data Revolution". In: \emph{Digital Governance}, \href{http://www.ufrgs.br/cegov/}{}
+
+%\end{bibenum}
+
+%\section{Papers in Preparation}
+%\begin{bibenum}
+
+%\item  M. Das, D.W. Blair and A. Levine, ``Cracks, Meltdowns and Crossover Sizes: An abrupt change in sublimation kinetics associated with the thermally-activated introduction of disclination charge in crystallites."
+
+%\item B. Mbanga, C. Burke, D.W. Blair, and T.J. Atherton, ``Arrested of coalescence of emulsion droplets of arbitrary size". 
+
+%\end{bibenum}
+
+\newpage
+
+\section{Current Projects}
+
+\href{http://openwaterproject.io}{\textbf{Open Water Project}}  \\
+\emph{Project Co-Lead} \hfill {Fall 2013 to present}
+
+\halfblankline
+
+The Open Water Project aims to collaboratively develop and curate a set of low-cost, open source tools, in order to enable communities to collect, interpret, and share insights about local water quality problems. 
+    \begin{innerlist}
+        \item Co-founder and current co-leader of the Open Water Project
+        \item Working to develop an initial set of open source water monitoring hardware prototypes, in collaboration with Ben Gamari, Jeff Walker, and others from the Public Lab community
+\item Working to facilitate engagement of water users, scientists, resource managers, journalists, artists, and environmental justice workers
+
+\end{innerlist}
+
+%%%%%%
+\blankline
+%%%%%%
+
+
+\href{http://publiclab.org/wiki/riffle}{\textbf{Riffle}} \\
+\emph{Project Co-Lead, Developer} \hfill {Fall 2013 to present} 
+
+\halfblankline
+
+``Remote, Independent, Friendly Logger for the Environment".  The Riffle Project is the Open Water Project's first set of environmental monitor prototypes, designed specifically for water quality and air quality applications. The Riffle development goal is to create an environmental data logger that will be low-cost, fully open-source (software, hardware, and with a non-proprietary data format), and  accessible, while being advanced enough to leverage cutting-edge electronics, microfluidics, and communications technologies.  
+Our initial set of collaborators on the project has included:
+\begin{innerlist}
+        \item \href{https://www.cambridgema.gov/Water.aspx}{The Cambridge Water Department}
+        \item \href{http://www.amherstmedia.org/makers}{InfoAmazonia}
+\item \href{http://plymouth.edu}{Plymouth State University}
+\item \href{http://umass.edu}{UMass Amherst}
+\item \href{http://unh.edu}{University of New Hampshire}
+\item \href{http://civic.mit.edu}{MIT's Center for Civic Media}
+\item \href{http://http://mysticriver.org/}{The Mystic River Watershed Association}
+\item \href{http://gopropeller.org/}{Propeller}, a New Orleans-based social ventures incubator.
+\end{innerlist}
+
+%%%%%%a
+\blankline
+%%%%%%
+
+
+\href{http://publiclab.org/wiki/coqui}{\textbf{Coqui}} \\
+\emph{Project Co-Lead, Developer} \hfill {Summer 2014 to present} 
+
+\halfblankline
+
+The Coqui is an electronics sensor platform intended to leverage common intuitions about the relationship between sound, light, and physical properties (e.g., ``higher frequency flashes or sounds $\Rightarrow$ more alarming") in order to render civic technologies as accessible and useful as possible. The design of the device is also intended to highlight assumptions made by civic tech developers around what perspectives and reactions are shared by their target publics.  Because versions of the device could be used for medical applications, it also aims to provoke reflection on certification, regulation, and restrictions on the development of DIY civic technologies.
+    \begin{innerlist}
+        \item Initial design developed collaboratively on publiclab.org
+\item Further development at MIT Open Water workshops
+\item Adopted by Florida International University for workshop on sea level rise
+        \item Featured in Emerson College data journalism class.
+\end{innerlist}
+
+%%%%%%a
+\blankline
+%%%%%%
+
+
+\href{http://www.slideshare.net/CatherineDIgnazio/sensing-nature-the-babbling-brook}{\textbf{Babbling Brook}} \\
+\emph{Developer} \hfill {Fall 2014 to present} 
+
+\halfblankline
+
+Catherine D'Ignazio's Babbling Brook Project  (see \href{https://www.youtube.com/watch?v=yP3mvWlxwxE}{demo video}) is a public art installation that measures local environmental conditions, combines these measurements with insights derived from live, web-based weather data, and reports on these conditions (via a speaker system) to the public.  The installation uses accessible, open hardware based on low-cost, popular educational and hobby electronics to provide students, scientists, and community organizers with a platform for delivering 'jokes about the weather' that help to relate global climate conditions to local 'microclimates'. Planned initial installations include a site at the \href{http://tidmarsh.media.mit.edu/}{Tidmarsh Living Observatory} as well as a public location on the MIT Campus during finals week.  Collaborators include: 
+
+\begin{innerlist}
+        \item \href{https://civic.mit.edu/users/kanarinka}{Catherine D'Ignazio}, Emerson College (Project Lead)
+\item \href{http://bdm.cc/}{Brian Mayton}, Responsive Environments, MIT Media Lab
+\item \href{https://www.linkedin.com/pub/james-coleman/9/265/b7b}{James Coleman}, MIT Architecture
+\end{innerlist}
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://open-eie.io}{\textbf{EIEIO}}  \\
+\emph{Co-Founder} \hfill {Summer 2014 to present}
+
+\halfblankline
+
+A design and development collective formed in order to address the need for novel and innovative support structures and resource flows in distributed, open source, commons-based technology research and development.  Guiding principles include: the use of open source, accessible technologies to the extent possible and facilitation of cooperation and outreach among disparate developer communities.  Initial projects have included:
+\begin{innerlist}
+\item \href{http://www.raspberrypi.org/}{Raspberry Pi}-based \href{http://publiclab.org/tag/fido}{Fido} and \href{http://publiclab.org/wiki/open-pipe-kit}{Open Pipe Kit} interfaces for air and water quality monitors
+\item Web and sensor technology for agriculture-focused monitoring devices
+\end{innerlist}
+
+
+
+\section{Teaching / Workshops / Panels}
+
+\begin{bibenum}
+
+\item "\href{http://diysustainability.org}{DIY Sustainability}", MIT IAP Course, January 2015, Cambridge, MA. 
+
+\item Co-Organizer, "\href{http://publiclab.org/notes/stevie/12-01-2014/the-water-hackathon-report}{Water Hackathon}", 18 and 22 Nov 2014, Propeller Social and Environmental Accelerator, New Orleans, LA. 
+
+\item Chair, ``Open Science Panel'', \href{http://www.umass.edu/itprogram/ict}{UMass Amherst ICT Summit}, March 27, 2013.
+
+\item Organizer, \href{https://www.flickr.com/photos/80184146@N06/sets/72157630612771292/show/}{``Open Science Hardware Workshop"}, UMass Amherst, July 12th, 2012.
+
+\item Co-Organizer, \href{http://publiclab.org/notes/donblair/07-15-2014/recap-open-water-workshop-july-12-2014}{``Open Water Workshop"}, MIT Media Lab, July 14, 2012. 
+
+
+\end{bibenum}
+
+\blankline
+
+\section{Invited Talks}
+
+\begin{bibenum}
+
+\item "Open Science and Public Lab", \href{http://www.gcmonitor.org/2014-conference/}{Community-Based Science for Action  Conference}, 15-17 November 2014, New Orleans, LA.
+
+\item \href{http://publiclab.org/notes/donblair/08-14-2014/epa-s-advanced-monitoring-tech-demo-day}{"The Riffle: an Open Source Hardware Water Quality Monitor"}, \emph{Next Generation Compliance Advanced Monitoring Tech Demo Day}, 5 Aug 2014, U.S. Environmental Protection Agency, Washington D.C.
+
+\item ``Infragram Plant Health Camera Prototype", \href{http://ICT4Ag.org}{\emph{ICT4Ag Digital Springboard for Inclusive Agriculture Conference}}, 4-8 November 2013, Kigali, Rwanda.
+
+\item \href{http://pvos.org/openscience-publiclab-leitzel/#/}{``Open Science and Public Lab"}, \href{http://leitzelcenter.unh.edu/}{Leitzel Center for Mathematics, Science, and Engineering}, \href{http://unh.edu}{University of New Hampshire}, 24 Oct 2013, Durham, NH. 
+
+%\item ``Infrared Plant Health Analysis", \emph{ \href{http://k12s.phast.umass.edu/digital/}{UMass Amherst STEM Digital Institute}}.
+
+%\item Cells and Materials: Systems Biology and Molecular Modeling.
+\emph{UCLA Institute for Pure and Applied Mathematics Workshop}, May 22 - 26, 2006.
+
+
+
+
+\end{bibenum}
+
+
+
+\section{Conference Presentations}
+
+\begin{bibenum}
+
+\item ``An Open Potentiostat'', \href{http://pvos.org}{Pioneer Valley Open Science}, \href{http://publiclab.org}{Public Lab}, and Smoky Mountain Scientific. \href{http://2013.oshwa.org/}{\emph{Open Hardware Summit}}, Sept 6, 2013.  
+
+\item \href{http://pvos.org}{Pioneer Valley Open Science}, \href{http://hackerfarm01007.org}{HackerFarm01007}, and \href{http://publiclab.org}{Public Lab} presentation, \href{http://makerfaireri.com/}{\emph{Rhode Island Mini Maker Faire}}, Aug 10, 2013.  (Winner: Editor's Choice Blue Ribbon). 
+
+\item ``\href{http://publiclab.org/wiki/riffle}{Riffle} hardware design.'' \href{http://farmhack.net}{FarmHack} \href{http://publiclab.org/notes/dorncox/05-10-2014/ifarm-2014}{iFarm meetup}, May 16-18th, 2014. 
+
+\item  \href{http://meetings.aps.org/Meeting/MAR13/Session/W29.11}{The role of curvature in the jamming of hard spheres on the surface of a spheroid}, \emph{Meeting of the American Physical Society}, Baltimore, Maryland, 2013.
+
+\item \href{http://meetings.aps.org/Meeting/MAR12/Session/P53.8}{Packing Squares in a Torus}, \emph{Meeting of the American Physical Society}, Boston, MA, 2012.
+
+\item \href{http://meetings.aps.org/Meeting/MAR08/Session/B39.11}{Simulated Flocking Dynamics of 2D Self-propelled Hard Particles}, \emph{Meeting of the American Physical Society}, New Orleans, Louisiana, 2008. 
+
+\item \href{http://physics.clarku.edu/gbasm/fall2007/}{On the Diameter of Random Clusters}, \emph{Greater Boston Areas Statistical Mechanics Meeting}, Brandeis, MA. October 2007.
+
+\item \href{http://meetings.aps.org/Meeting/MAR07/Event/57451}{The Parallel Computational Complexity of the Percolation Model}, \emph{Meeting of the American Physical Society}, Denver, CO. March 2007.
+
+\item \href{http://meetings.aps.org/Meeting/MAR07/Session/H22.7}{Diameter Random Clusters in Potts Models}, \emph{Meeting of the American Physical Society}, Denver, CO. March 2007.
+
+\item \href{http://meetings.aps.org/Meeting/MAR07/Session/X19.4}{Cracks, Meltdowns and Crossover Sizes: An abrupt change in sublimation kinetics associated with the thermally-activated introduction of disclination charge in crystallites}, \emph{Meeting of the American Physical Society}, Denver, CO. March 2007.
+
+\item \href{http://meetings.aps.org/Meeting/MAR06/Session/D21.11}{Simulated Colloidal Melting Kinetics in 2D}, \emph{Meeting of the American Physical Society}, Baltimore, MD. March 2006.
+
+\item ``End-shape-dependent behavior in a Simulated 2D Active Matter System," Cells and Materials: Systems Biology and Molecular Modeling.
+UCLA Institute for Pure and Applied Mathematics Workshop, May 22 - 26, 2006.
+
+\end{bibenum}
+
+\section{Grants and Awards}
+\restartlist{bibenum}
+
+\textbf{In Preparation}
+
+\halfblankline
+
+
+\begin{bibenum}
+
+    \item \href{http://www.nsf.gov/pubs/2013/nsf13608/nsf13608.htm}{NSF 13-608 Advancing Informal STEM Learning (AISL)} In this proposal,
+\href{http://emerson.edu}{Emerson College}, \href{http://plymouth.edu}{Plymouth State University}, and \href{http://publiclab.org}{Public Laboratory for Technology  Science} in partnership with the \href{http://civic.mit.edu}{MIT Center for Civic Media} and the \href{http://www.media.mit.edu/node/9441}{Future of News Initiative at the MIT Media Lab} are creating an \emph{Environmental Storytelling Institute} - a year-long series of hands-on workshops around environmental research and storytelling. 
+
+\end{bibenum}
+
+\blankline
+
+\textbf{Awarded}
+
+\halfblankline
+
+
+\begin{bibenum}
+
+    \item \href{http://shass.mit.edu/inside/resources/internal/deflorez/application}{Peter de Florez '38 Humor Fund Committee} for the Babbling Brook Project at MIT.  With: Catherine D'Ignazio, James Coleman, and Glorianna Davenport. ``The Babbling Brook is a large, red, networked flower sculpture that monitors water conditions in the body of water where it is placed, combines that data with current weather conditions, and proceeds to tell very bad jokes in a Text-to-Speech robot voice about that data." Scheduled installations on MIT campus at at the \href{http://tidmarsh.media.mit.edu/}{Living Observatory} in Plymouth, MA. 
+
+\item \href{http://gopropeller.org/}{Propeller} Social Venture Water Fellowship, Sept 3, 2014, in support of the \href{http://publiclab.org/wiki/riffle}{Riffle} project.
+
+\item Winning Team (First Prize), ``\href{http://challengepost.com/software/mighty-mom-utility-belt}{Mighty Mom Utility Belt}", for \href{http://breastpump.media.mit.edu/}{MIT Breast Pump Hackathon}, Sept 20-21, 2014, MIT Media Lab. 
+
+\end{bibenum}
+
+\blankline
+
+
+\textbf{Not Awarded }
+
+\halfblankline
+
+\begin{bibenum}
+    \item NSF Proposal:  1442846.  Title:  CYBERSEES: TYPE 1: ``Designing a Global-to-local, replicable, open-source science and engineering network in support of community-based environmental monitoring." July, 2014. 
+\end{bibenum}
+
+\section{Professional Experience}
+
+
+\href{http://publiclab.org}{\textbf{Public Lab}} \\
+\emph{Fellow}  \hfill {July 2014 to present}
+
+\halfblankline
+
+\begin{innerlist}
+\item Developed critiques and commentary on current approaches to citizen science and crowdfunding from commons-based and digital labor perspectives
+\item Contributed to discussions on the structure of Public Lab initiatives
+\item Facilitated community participation in Public Lab programs
+\item Sustainable support structures for Public Lab and civic engagement initiatives through grants and the development of novel transactional structures / business models.
+\item Developed practices around the curation and support of projects within the Public Lab community
+
+\end{innerlist}
+   
+%%%%%%a
+\blankline
+%%%%%%
+
+\href{http://partsandcrafts.org}{\textbf{Parts and Crafts}} \\
+\emph{Facilitator and collaborator.}  \hfill {Summer 2014 to present }
+
+\halfblankline
+
+\begin{innerlist}
+\item Worked with summer campers aged 5 to 12 engage cooperatively on electronics, crafts, and group activities, including robotics, water monitoring, and aerial mapping. 
+\item Working on strategies for extending the organization's approach to include a local, family-hackerspace model.
+   
+\end{innerlist}
+
+%%%%%%a
+\blankline
+%%%%%%
+
+
+\begin{minipage}{\textwidth}
+\href{http://FarmHack.net}{\textbf{FarmHack}}  \\
+\emph{Special Advisor to Citizen Science Initiatives} \hfill {July 2012 to present}
+
+\halfblankline
+
+The FarmHack community facilitates and curates the development of open source tools for sustainable agriculture and land management.  Their focus on 'solving problems in the long-term' - where, for example, healthy soil is considered a biological machine that help remediate contaminated water, while producing food - is a natural complement to Public Lab's monitoring and accountability work.
+\begin{innerlist}
+\item Facilitated discussion and helped organize meetups that join the FarmHack and Public Lab communities. 
+\item Worked collaboratively on programming strategy around citizen science initiatives within the FarmHack community
+\item Contributed to online infrastructure development and planning, and agriculture-focused technology development
+\end{innerlist}
+   
+
+
+%%%%%%a
+\blankline
+%%%%%%
+
+\end{minipage}
+
+
+
+\href{http://publiclab.org}{\textbf{Public Lab}}  \\
+\emph{Organizer} \hfill {July 2012 to present}
+
+\halfblankline
+\begin{innerlist}
+\item Organized meetups in Amherst, New Hampshire, Somerville, Vermont, Cape Cod
+\item Facilitated online discussions
+\item Work to translate technical jargon in discussions that bring together scientists, technologists, activists, and local residents
+\end{innerlist}
+   
+
+%%%%%%a
+\blankline
+%%%%%%
+
+\href{http://pvos.org}{\textbf{Pioneer Valley Open Science Institute}}  \\
+\emph{Co-Founder} \hfill {July 2012 to present}
+
+\halfblankline
+
+The Pioneer Valley Open Science Institute consists of professors, graduate students, librarians, school teachers, and media professionals who have worked together to develop and reflect upon the application of an open source ethos in scientific research.  It is an informal ``institute", with infrequent meet-ups, and has heretofore consisted mostly of organized contributions and 'development sprints' on technologies related to Public Lab and FarmHack.  
+
+%%%%%%a
+\blankline
+%%%%%%
+
+\href{http://www.umass.edu/digitalcenter/}{\textbf{National Center for Digital Government}}\\
+\emph{Fellow} \hfill {2012 to 2013}
+
+\halfblankline
+
+Fellowship activities included:
+
+\begin{innerlist}
+\item Contributed to discussions of labor, hierarchy, and power dynamics in open source communities
+\item Participated in research and analysis on the relationship between DIY, crowd-based systems and existing institutional power, via the Workshop on the Knowledge commons [LINK]
+\item Elaborated a view of 'curation' as a common theme when applying an open source ethos in an academic context
+\end{innerlist}
+   
+%%%%%%a
+\blankline
+%%%%%%
+
+\href{http://www.umass.edu/digitalcenter/}{\textbf{ESPCI/CNRS}}\\
+\emph{Researcher} \hfill {July 2009 to August 2009}
+
+\halfblankline
+
+Contributed to a model of the stochastic dynamics of growth and shrinkage of single actin filaments,
+comparing two possible mechanisms of ATP hydrolysis: a vectorial mechanism, in which the filament
+grows only from one end, and a stochastic mechanism that allows for insertion of subunits at random
+locations within the filament. Supervisor: \href{}{Professor David Lacoste}.
+   
+%%%%%%a
+\blankline
+%%%%%%
+
+
+\href{http://www.umass.edu/digitalcenter/}{\textbf{UMass Amherst Department of Physics}}\\
+\emph{Researcher and Teaching Assistant} \hfill {July 2000 to August 2007}
+
+\halfblankline
+
+\begin{innerlist}
+\item Tutored undergraduate physics students from the Five Colleges in mathematics and physics, with a focus on classical mechanics and introductory and intermediate electromagnetism coursework.  
+\item Worked on an array of research projects (see below), primarily in the areas of soft matter and statistical physics, pursuit of a doctoral degree in physics (pending).
+\end{innerlist}  
+
+
+\section{Previous Projects}
+
+\href{http://publiclab.org/notes/donblair/08-11-2014/research-note-workflows}{\textbf{RStudio $+$ Github in support of an open science publication platform}}\\
+\emph{Developer} \hfill {2014}
+
+\halfblankline
+
+With Jeff Walker, worked on strategy for leveraging a commonly-used data analysis suite, RStudio, which allows for weaving together code, comments, images, and equations in \LaTeX{} and Markdown, along with a popular data version control system, to prototype a system for a highly-replicable, version-controlled publication platform. Topics discussed / prototyped included:
+ \begin{innerlist}
+        \item Use of timestamps and contributor history for proper attribution of contributions  
+        \item Integration with the Public Lab online platform
+\item Integration with MIT Library infrastructure
+
+\end{innerlist}
+
+
+%%%%%%a
+\blankline
+%%%%%%
+
+
+\href{http://www.amherstmedia.org/makers}{\textbf{Makers @ Amherst Media}}\\
+\emph{Collaborator and Developer} \hfill {2013-2014}
+
+\halfblankline
+
+\begin{innerlist}
+\item Developed strategies around the form and approach of community science and technology initiatives at Amherst Media, an organization with a long history of civic engagement and community service. 
+\item Co-organized initial 'Maker' events at Amherst Media, bringing together members of the Five Colleges and Amherst Middle School students.
+\item Participated in discussions around supporting the use and development of a local 'Maker' community in the Pioneer Valley.
+\end{innerlist}  
+
+%%%%%%a
+\blankline
+%%%%%%
+
+
+\href{http://hackforwesternmass.org/}{\textbf{Hack For Western Mass}} \\
+\emph{Co-organizer} \hfill {July 2013} 
+
+\halfblankline
+
+A gathering of 'local people solving local problems'. For several weeks, organizations in the community with unmet web and technology development needs were contacted, resulting in a list of possible hackathon projects.  The process culminated in a two-day hackathon on the UMass Amherst campus, which brought together over 100 developers, working on an array of projects:
+    \begin{innerlist}
+        \item Mapping local wells and water quality
+\item Teen mother educational opportunities
+\item Mapping 'safety net' service needs
+\item Expanding Northampton's tree canopy
+\item Auditing and visualizing federal money in local communities
+\item A seed swap database
+\item Promoting local banking
+\item Opening up prison phone data archives
+\item Working on OpenStreetMaps for Western Mass
+\end{innerlist}
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://publiclab.org/wiki/thermal-flashlight}{\textbf{Thermal Flashlight}}\\
+\emph{Developer} \hfill {2012 to 2013}
+
+\halfblankline
+
+Helped develop initial printed circuit board prototypes for Public Lab's 'Thermal Flashlight' design, an open source tool for inexpensive visualization of thermal leaks in the home. 
+
+%%%%%%a
+\blankline
+%%%%%%
+
+
+
+\href{http://infragram.org}{\textbf{Infragram}}\\
+\emph{Developer} \hfill {2013 to 2014}
+
+\halfblankline
+
+Helped to develop initial hardware software for prototype versions of  Public Lab's prototype plant-health camera, which relies on the differential absorption of particular electromagnetic frequency bands by healthy photosynthesizing plants.  Work included:
+ \begin{innerlist}
+\item using computer vision techniques on a Raspberry Pi to use image features to assist in image overlay
+\item modifying Raspberry Pi hardware in order to allow for synchronized, multispectral camera attachments 
+\item developing the first online web form and image processing prototype for Public Lab's \href{http://infragram.org}{Infragram} image analysis tool.
+\end{innerlist}
+
+%%%%%%a
+\blankline
+%%%%%%
+
+\href{https://github.com/dwblair/UMass-Open-Science-Hardware/wiki/Workshop-Summary}{\textbf{UMass Open Science Hardware Workshop}} \\
+\emph{Co-organizer} \hfill {July 2012} 
+
+\halfblankline
+
+Workshop brought together over 50 members of the Five College research community in order to demo and discuss open source tools useful for traditional laboratory research settings. Topics including calibration, the development of a supportive community around open hardware, and various approaches to storing and curating data.
+Demonstrations included open source technology for:
+    \begin{innerlist}
+        \item Controlling digital cameras
+        \item Temperature feedback and control
+        \item Laboratory equipment automation
+\item Wireless communication 
+\item Sensors
+\item Data acquisition and logging
+\item Breadboarding an Arduino
+\end{innerlist}
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://dwblair.github.io}{\textbf{Live, Web-based Twitter Analysis Tool }}\\
+\emph{Developer} \hfill {2012}
+
+\halfblankline
+
+Initially developed for the 2012 UMass Amherst ICT Summit: a Processing-based tool that performs word counts on tweets associated with a user-defined hashtag, and visualizes these words with 'bubbles' whose diameter is proportional to word frequency. Planned extensions include the ability to pull up associated Tweets by interacting with bubbles; imagined uses included: 
+ \begin{innerlist}
+        \item generating a live 'word cloud' for a given topic
+\item use at conferences and in classrooms for moderating topics on a Twitter 'backchannel' 
+\end{innerlist}
+
+
+%%%%%%a
+\blankline
+%%%%%%
+
+\href{http://dwblair.github.io}{\textbf{Flocking, Swarming, and Active Matter}} \hfill {with N. Menon} \\
+\emph{Theory, Simulation}
+
+\halfblankline
+
+Studied the end-shape dependence of density fluctuations, distance and orientational correlations, and structures in simulated granular systems (Monte Carlo), with implications for both granular materials and biological systems with limited long-range sensing capabilities (bacteria). 
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://dwblair.github.io}{\textbf{Colloidal Physics}} \hfill {with A. Levine, J. Machta, A. Dinsmore, J.R. Savage, and M. Das} \\
+\emph{Theory, Computer Simulation} 
+
+\halfblankline
+
+Performed Brownian dynamics simulations of the sublimation kinetics of colloidal crystallites, and found an abrupt increase in the sublimation rate at a particular crystallite size, elucidating the results of
+recent colloidal experiments. Explored possibility that crossover in the kinetics is due to the thermally activated
+introduction of a disclination charge leading to large internal stresses that result in a fission event, and a
+break-up of the remaining crystallite. Currently developing an alternative, droplet-evaporation
+model for the same phenomenon.
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://dwblair.github.io}{\textbf{Graph-theoretic Diameter of Random Cluster Models}} \hfill {with J. Machta} \\
+\emph{Theory, Computer Simulation} 
+
+\halfblankline
+
+Used Swendsen-Wang Monte Carlo simulations in order to measure the scaling behavior of the fractal
+dimension of the diameter $D$ of q-state Potts Model clusters, where $D$ is defined in the graph-theoretic
+sense of the ``longest shortest path" along bonds in a cluster. Developed a novel algorithm for
+determining $D$ efficiently, and present results for $q = 1, 2, 3, 4$ in 2D and 3D lattices. Attempting to
+relate the scaling exponent for $D$ to other known exponents.
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://dwblair.github.io}{\textbf{Packing of Polygons on Compact Geometries}} \hfill {with B. Mbanga, C. Burke, T. Atherton} \\
+\emph{Theory, Computer Simulation} 
+
+\halfblankline
+
+Employed analytic and simulated annealing methods to study the packing of squares on a flat torus, and
+have found a rich array of dense packing solutions. Future work will include using the recent population
+annealing algorithm to explore the densest packings of additional shapes in finite and compact geometries, as well as an exploration of the dependence of packing density and patterns on particle aspect ratio. 
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://dwblair.github.io}{\textbf{Computational Complexity}} \hfill {with J. Machta} \\
+\emph{Theory, Computer Simulation} 
+
+\halfblankline
+
+Motivated both by recent attempts to elucidate the nature of ``phase transitions" in computational complexity, and by the general project of characterizing the complexity physical systems according to their
+``parallel computational depth", explored the parallel computational complexity of the Percolation
+(Potts q = 1) model. Developed an algorithm for identifying infinite clusters at bond occupation
+probabilities p above the critical value $p_{c}$ , and found (via numerical Monte Carlo simulation) a
+phase transition in computational complexity at $p_{c}$, thus relating a phase transition in computational
+complexity to a structural phase transition.
+
+%%%%%%
+\blankline
+%%%%%%
+
+\href{http://dwblair.github.io}{\textbf{Biophysics}} \hfill {with M. Muthukumar, H. Siegelman} \\
+\emph{Theory, Computer Simulation} 
+
+\halfblankline
+
+\begin{innerlist}
+\item \emph{Bioscillations}. Preliminary research into the synchronization of gene expression oscillations in the cells of
+the Mammalian suprachiasmatic nucleus, which regulates Circadian rhythms, through the study of a lattice network of Kuramoto oscillators. 
+\item \emph{Bacteriophage}. Brownian Dynamics simulations of packaging and ejection forces in bacteriophage.
+\end{innerlist}
+
+
+
+
+
+\section{Professional Associations}
+
+\href{http://artisansasylum.com/site/}
+     {Artisan's Asylum} -- community education and technical support
+
+\halfblankline
+
+\href{http://p.irateship.com/}
+     {Pirateship} -- local hackerspace with radical leanings
+
+\halfblankline
+
+\href{http://www.farmhack.net/}
+     {FarmHack} -- open source agriculture
+
+\halfblankline
+
+
+\href{http://knowledge-commons.net/}
+     {Workshop on the Knowledge Commons} -- research on commons-based knowledge production
+
+\section{Skills}
+
+\textbf{Computing}
+%
+\begin{innerlist}
+    \item Languages: C, Python, C++, Fortran, Javascript, \LaTeX{}
+    \item Packages: Pylab, Scipy, R, Matlab, Octave, Mathematica, Processing
+    \item Hardware: printed circuit board design and production with Eagle CAD
+\end{innerlist}
+
+\halfblankline
+
+\textbf{Physics, Mathematics, Analysis}
+
+Conversant in research methods related to statistical mechanics, social and neuronal networks, collective behavior, foams, granular materials, complex systems, random graphs, packing colloidal physics, graph theory / coloring, stochastic epidemic models / percolation, spin systems, Monte Carlo algorithms, and graph theory. 
+
+\halfblankline
+
+%\textbf{Cardboard-based Rapid Prototyping}
+
+
+\section{Popular Press and Reports}
+
+\begin{bibsection}
+
+\item Gillies, J. \href{http://www.fondriest.com/news/pursuing-diy-open-source-water-quality-monitoring-rural-colombia-mystic-river-mass.htm}{``Pursuing DIY, open-source water quality monitoring from rural Colombia to Mystic River, Mass."}, \emph{Environmental Monitor}, March 13, 2014. 
+
+\item Berry, R. and Cevey, S. \href{http://www.theguardian.com/info/developer-blog/2014/jul/18/hacking-journalism-at-the-mit-media-lab}{"Hacking Journalism at the MIT Media Lab"}, \emph{The Guardian}, July 18, 2014. 
+
+\item Pitt, F. \href{http://towcenter.org/sensors-and-journalism-public-lab-homebrew-hardware/}{``Public Lab:  Homebrew Hardware"}, \emph{Sensors and Journalism}, May, 2014. \href{http://towcenter.org}{Tow Center for Digital Journalism}, Columbia University.
+
+\item Levingston, K. \href{http://www.boston.com/health/2014/09/21/mighty-mom-breast-pumping-toolbelt-wins-mit-hackathon/colHXp5XR0HHIpaaKDXcfM/story.html}{``Mighty Mom Breast Pumping Toolbelt Wins MIT Hackathon"}, \href{http://boston.com}{\emph{Boston.com}}, Sept 21, 2014. 
+
+\end{bibsection}
+
+\section{Balloons}
+
+\href{https://www.youtube.com/watch?v=8k5SxS7yCio}{UMass Amherst Physics Weather Balloon}, April 20, 2012. Collected temperature and pressure data using custom open hardware instrumentation.  
+
+\section{Tubes}
+
+\href{https://github.com/innovations-in-mother-child-health/zip-tube}{Zip-tube}: an open-source, reusable, easy-to-sterilize system for liquid transport.  Matt Carney, Tal Achituv, and the Mighty Mom Team. \href{http://breastpump.media.mit.edu/}{MIT Breast Pump Hackathon}, Sept 21, 2014. 
+
+
+% The ``More Info'' section may not be necessary; make sure it's short
+% so it doesn't prevent people from seeing references available to
+% contact.
+\section{More Information}
+
+More information and auxiliary documents can be found at\\%
+\url{http://dwblair.github.io}.
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
